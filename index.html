@@ -923,6 +923,477 @@
       .workshop-header { flex-direction: column; }
     }
 
+    /* ── TEKLİF BÖLÜMÜ ── */
+    #teklif {
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+    #teklif::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201,168,76,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .teklif-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 64px;
+    }
+
+    .teklif-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .teklif-info p {
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .teklif-kapsam {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .teklif-kapsam li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+    .teklif-kapsam li::before {
+      content: '◆';
+      color: var(--gold);
+      font-size: 0.5rem;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .teklif-form-box {
+      background: var(--surface);
+      border: 1px solid var(--gold-border);
+      padding: 40px;
+      position: relative;
+    }
+    .teklif-form-box::before {
+      content: '// TEKLİF TALEBİ';
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      position: absolute;
+      top: -10px;
+      left: 24px;
+      background: var(--surface);
+      padding: 0 8px;
+    }
+
+    .tform-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .tform-group {
+      margin-bottom: 16px;
+    }
+    .tform-group label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .tform-group input,
+    .tform-group select,
+    .tform-group textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.25s;
+      appearance: none;
+    }
+    .tform-group input:focus,
+    .tform-group select:focus,
+    .tform-group textarea:focus {
+      border-color: var(--gold);
+    }
+    .tform-group select option { background: #0D1527; }
+    .tform-group textarea { resize: vertical; min-height: 80px; }
+
+    .btn-teklif {
+      width: 100%;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: 16px 32px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 8px;
+    }
+    .btn-teklif:hover { background: var(--gold-light); }
+    .btn-teklif:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── TEKLİF MODAL ── */
+    #teklif-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(6,8,15,0.95);
+      backdrop-filter: blur(8px);
+      overflow-y: auto;
+      padding: 40px 24px;
+    }
+    #teklif-modal.open { display: flex; align-items: flex-start; justify-content: center; }
+
+    .modal-inner {
+      width: 100%;
+      max-width: 860px;
+      position: relative;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-bottom: 24px;
+    }
+    .btn-modal-close {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-modal-close:hover { border-color: var(--danger); color: var(--danger); }
+    .btn-modal-print {
+      background: var(--gold);
+      border: 1px solid var(--gold);
+      color: var(--bg);
+      padding: 10px 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-modal-print:hover { background: var(--gold-light); }
+
+    /* TEKLİF BELGESİ */
+    #teklif-belge {
+      background: #fff;
+      color: #1a1a2e;
+      font-family: 'Outfit', sans-serif;
+      padding: 0;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+
+    .tb-header {
+      background: #0C1425;
+      padding: 48px 56px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .tb-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #C9A84C;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .tb-logo-sub {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: #6B7A90;
+      letter-spacing: 0.2em;
+      margin-top: 4px;
+    }
+    .tb-header-meta {
+      text-align: right;
+    }
+    .tb-doc-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      color: #C9A84C;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .tb-doc-no {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .tb-doc-date {
+      font-size: 0.78rem;
+      color: #8896AB;
+      margin-top: 4px;
+    }
+    .tb-gold-line {
+      height: 3px;
+      background: linear-gradient(90deg, #C9A84C 0%, #E8C96E 50%, #C9A84C 100%);
+    }
+
+    .tb-body { padding: 48px 56px; }
+
+    .tb-section { margin-bottom: 40px; }
+    .tb-section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      color: #C9A84C;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tb-section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(201,168,76,0.3);
+    }
+
+    .tb-parties {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .tb-party-box {
+      background: #f8f7f5;
+      border-left: 3px solid #C9A84C;
+      padding: 20px 24px;
+    }
+    .tb-party-role {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      color: #8896AB;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .tb-party-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #0C1425;
+      margin-bottom: 4px;
+    }
+    .tb-party-detail {
+      font-size: 0.82rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .tb-scope-intro {
+      font-size: 0.9rem;
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 24px;
+      padding: 20px 24px;
+      background: #f0f4ff;
+      border-left: 3px solid #0C1425;
+    }
+
+    .tb-modules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .tb-module-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: #f8f7f5;
+      border: 1px solid #e8e4dc;
+    }
+    .tb-mod-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      color: #C9A84C;
+      font-weight: 500;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .tb-mod-name {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #1a1a2e;
+      line-height: 1.4;
+    }
+    .tb-mod-desc {
+      font-size: 0.74rem;
+      color: #777;
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    .tb-logistics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .tb-logi-item {
+      text-align: center;
+      padding: 20px 16px;
+      background: #f8f7f5;
+      border-top: 2px solid #C9A84C;
+    }
+    .tb-logi-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0C1425;
+      line-height: 1.2;
+    }
+    .tb-logi-key {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.55rem;
+      color: #8896AB;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .tb-price-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .tb-price-table th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #8896AB;
+      text-align: left;
+      padding: 10px 16px;
+      background: #f8f7f5;
+      border-bottom: 1px solid #e8e4dc;
+    }
+    .tb-price-table td {
+      padding: 14px 16px;
+      font-size: 0.85rem;
+      color: #333;
+      border-bottom: 1px solid #f0ece4;
+    }
+    .tb-price-table tr.total-row td {
+      background: #0C1425;
+      color: #C9A84C;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border: none;
+    }
+    .tb-price-table td:last-child { text-align: right; font-weight: 500; }
+    .tb-price-table th:last-child { text-align: right; }
+
+    .tb-terms {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .tb-term-item {
+      font-size: 0.8rem;
+      color: #555;
+      padding: 12px 16px;
+      background: #f8f7f5;
+      border-left: 2px solid #e8e4dc;
+      line-height: 1.6;
+    }
+    .tb-term-item strong {
+      color: #1a1a2e;
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.75rem;
+    }
+
+    .tb-signature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 8px;
+    }
+    .tb-sig-box {
+      border-top: 1px solid #ccc;
+      padding-top: 12px;
+    }
+    .tb-sig-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: #999;
+      text-transform: uppercase;
+    }
+    .tb-sig-space {
+      height: 48px;
+    }
+    .tb-sig-name {
+      font-size: 0.82rem;
+      color: #333;
+      margin-top: 4px;
+    }
+
+    .tb-footer {
+      background: #0C1425;
+      padding: 24px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tb-footer-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      color: #5E6D80;
+      letter-spacing: 0.12em;
+    }
+    .tb-footer-validity {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: #C9A84C;
+      letter-spacing: 0.1em;
+    }
+
+    @media print {
+      body > *:not(#teklif-modal) { display: none !important; }
+      #teklif-modal { position: static; background: none; padding: 0; display: block !important; }
+      .modal-actions { display: none !important; }
+      .modal-inner { max-width: 100%; }
+      #teklif-belge { box-shadow: none; }
+    }
+
     /* Utility */
     .text-center { text-align: center; }
     .mt-4 { margin-top: 4px; }
@@ -945,7 +1416,10 @@
 <!-- NAV -->
 <nav id="navbar">
   <div class="nav-logo">Nexus <span>AI</span></div>
-  <a href="#survey" class="nav-cta">Olgunluk Testi →</a>
+  <div style="display:flex;gap:16px;align-items:center;">
+    <a href="#survey" class="nav-cta">Olgunluk Testi →</a>
+    <a href="#teklif" class="nav-cta" style="background:var(--gold-dim);border-color:var(--gold);">Teklif Al →</a>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -1409,6 +1883,134 @@
   </div>
 </section>
 
+<!-- TEKLİF BÖLÜMÜ -->
+<section id="teklif">
+  <div class="container">
+    <div class="reveal" style="text-align:center;margin-bottom:16px;">
+      <div class="section-label" style="justify-content:center;">
+        <span style="width:32px;height:1px;background:var(--gold);display:inline-block;"></span>
+        Workshop Teklifi
+        <span style="width:32px;height:1px;background:var(--gold);display:inline-block;"></span>
+      </div>
+      <h2 class="section-title">Kurumunuza Özel<br><em>Teklif Alın</em></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Formu doldurun, dakikalar içinde profesyonel teklifinizi hazırlayalım.</p>
+    </div>
+
+    <div class="teklif-grid reveal">
+      <!-- Sol: Bilgi -->
+      <div class="teklif-info">
+        <h3>1 Günlük Yapay Zeka Workshop'u</h3>
+        <p>Kurumunuzun tüm ekibine yönelik, sektörünüze özel vaka çalışmaları ve uygulamalı deneyimlerle desteklenmiş yoğun bir gün. Teoriden eyleme geçişin en hızlı yolu.</p>
+        <ul class="teklif-kapsam">
+          <li>Yapay Zeka temelleri ve güncel kavramlar</li>
+          <li>Makine Öğrenmesi ve LLM'lere giriş</li>
+          <li>Prompt Mühendisliği — etkili kullanım teknikleri</li>
+          <li>Agent kavramı ve iş süreçlerine entegrasyon</li>
+          <li>Popüler AI araçlarının karşılaştırmalı incelemesi</li>
+          <li>Kurumunuza özel AI kullanım senaryoları</li>
+          <li>Canlı uygulama seansı ve Q&A</li>
+          <li>Sertifika + workshop materyalleri dahil</li>
+        </ul>
+        <div style="margin-top:32px;padding:20px 24px;background:var(--surface);border:1px solid var(--gold-border);">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;color:var(--muted);margin-bottom:8px;">// SÜRE</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold-light);">09:00 – 17:30</div>
+          <div style="font-size:0.8rem;color:var(--text);margin-top:4px;">8 saat · 8 modül · Mola dahil</div>
+        </div>
+      </div>
+
+      <!-- Sağ: Form -->
+      <div class="teklif-form-box">
+        <form id="teklif-form" autocomplete="off">
+          <div class="tform-row">
+            <div class="tform-group">
+              <label>Adınız Soyadınız *</label>
+              <input type="text" id="tf-ad" placeholder="Ahmet Yılmaz" required>
+            </div>
+            <div class="tform-group">
+              <label>Ünvan</label>
+              <input type="text" id="tf-unvan" placeholder="İK Müdürü">
+            </div>
+          </div>
+          <div class="tform-row">
+            <div class="tform-group">
+              <label>Şirket Adı *</label>
+              <input type="text" id="tf-sirket" placeholder="ABC Teknoloji A.Ş." required>
+            </div>
+            <div class="tform-group">
+              <label>Sektör *</label>
+              <select id="tf-sektor" required>
+                <option value="">Seçiniz…</option>
+                <option>Üretim / Sanayi</option>
+                <option>Finans / Bankacılık</option>
+                <option>Perakende / E-ticaret</option>
+                <option>Sağlık</option>
+                <option>Lojistik</option>
+                <option>Turizm / Otelcilik</option>
+                <option>Eğitim</option>
+                <option>İnşaat / Gayrimenkul</option>
+                <option>Teknoloji / Yazılım</option>
+                <option>Diğer</option>
+              </select>
+            </div>
+          </div>
+          <div class="tform-row">
+            <div class="tform-group">
+              <label>E-posta *</label>
+              <input type="email" id="tf-email" placeholder="ahmet@sirket.com" required>
+            </div>
+            <div class="tform-group">
+              <label>Telefon</label>
+              <input type="tel" id="tf-telefon" placeholder="0532 000 00 00">
+            </div>
+          </div>
+          <div class="tform-row">
+            <div class="tform-group">
+              <label>Katılımcı Sayısı *</label>
+              <select id="tf-katilimci" required>
+                <option value="">Seçiniz…</option>
+                <option value="10-20">10 – 20 kişi</option>
+                <option value="21-30">21 – 30 kişi</option>
+                <option value="31-50">31 – 50 kişi</option>
+                <option value="50+">50+ kişi</option>
+              </select>
+            </div>
+            <div class="tform-group">
+              <label>Tercih Edilen Tarih</label>
+              <input type="date" id="tf-tarih">
+            </div>
+          </div>
+          <div class="tform-group">
+            <label>Lokasyon Tercihi</label>
+            <select id="tf-lokasyon">
+              <option value="sirket">Kendi ofisimizde</option>
+              <option value="dis">Dış mekân / Toplantı salonu</option>
+              <option value="online">Online (Zoom/Teams)</option>
+            </select>
+          </div>
+          <div class="tform-group">
+            <label>Ek Notlar / Özel Talepler</label>
+            <textarea id="tf-not" placeholder="Sektörünüze özel odaklanmasını istediğiniz konular, geçmiş AI deneyimleriniz vb."></textarea>
+          </div>
+          <button type="submit" class="btn-teklif">Teklifimi Oluştur →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEKLİF MODAL -->
+<div id="teklif-modal">
+  <div class="modal-inner">
+    <div class="modal-actions">
+      <button class="btn-modal-close" onclick="closeTeklif()">✕ Kapat</button>
+      <button class="btn-modal-print" onclick="window.print()">⬇ PDF Olarak Kaydet</button>
+    </div>
+    <div id="teklif-belge">
+      <!-- İçerik JS tarafından doldurulur -->
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">NEXUS AI</div>
@@ -1648,6 +2250,233 @@
 
   // Initialize
   updateProgress();
+
+  // ── TEKLİF FORMU ──
+  const teklifForm = document.getElementById('teklif-form');
+  if (teklifForm) {
+    teklifForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        ad:         document.getElementById('tf-ad').value.trim(),
+        unvan:      document.getElementById('tf-unvan').value.trim(),
+        sirket:     document.getElementById('tf-sirket').value.trim(),
+        sektor:     document.getElementById('tf-sektor').value,
+        email:      document.getElementById('tf-email').value.trim(),
+        telefon:    document.getElementById('tf-telefon').value.trim(),
+        katilimci:  document.getElementById('tf-katilimci').value,
+        tarih:      document.getElementById('tf-tarih').value,
+        lokasyon:   document.getElementById('tf-lokasyon').value,
+        not:        document.getElementById('tf-not').value.trim(),
+      };
+      if (!data.ad || !data.sirket || !data.sektor || !data.email || !data.katilimci) {
+        alert('Lütfen zorunlu alanları doldurun.');
+        return;
+      }
+      generateTeklif(data);
+    });
+  }
+
+  function generateTeklif(d) {
+    // Fiyatlandırma
+    const fiyatlar = {
+      '10-20': { baz: 25000, katilimci: '10 – 20 Kişi' },
+      '21-30': { baz: 32000, katilimci: '21 – 30 Kişi' },
+      '31-50': { baz: 40000, katilimci: '31 – 50 Kişi' },
+      '50+':   { baz: 0,     katilimci: '50+ Kişi (Özel Fiyat)' },
+    };
+    const fp = fiyatlar[d.katilimci] || fiyatlar['10-20'];
+    const ozelFiyat = fp.baz === 0;
+    const baz = fp.baz;
+    const materyalUcreti = ozelFiyat ? 0 : Math.round(baz * 0.08);
+    const seyahat = d.lokasyon === 'sirket' ? 0 : 0; // Bursa içi ücretsiz
+    const araToplamTutar = baz + materyalUcreti + seyahat;
+    const kdv = ozelFiyat ? 0 : Math.round(araToplamTutar * 0.20);
+    const toplamTutar = araToplamTutar + kdv;
+
+    const teklifNo = 'NXS-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 900) + 100);
+    const bugun = new Date();
+    const tarihStr = bugun.toLocaleDateString('tr-TR', { day:'2-digit', month:'long', year:'numeric' });
+    const gecerlilik = new Date(bugun.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const gecerlilikStr = gecerlilik.toLocaleDateString('tr-TR', { day:'2-digit', month:'long', year:'numeric' });
+
+    const workshopTarihi = d.tarih
+      ? new Date(d.tarih).toLocaleDateString('tr-TR', { day:'2-digit', month:'long', year:'numeric' })
+      : 'Mutabık kalınacak tarihte';
+
+    const lokasyonMeyin = {
+      sirket: 'Müşteri tesisinde (Bursa)',
+      dis: 'Kiralık toplantı salonu',
+      online: 'Online (Zoom / Microsoft Teams)',
+    }[d.lokasyon] || '';
+
+    const fmt = (n) => n.toLocaleString('tr-TR') + ' ₺';
+
+    const modules = [
+      { num: '01', name: 'Yapay Zekâ Nedir?', desc: 'Temel kavramlar, tarihsel gelişim ve güncel durum' },
+      { num: '02', name: 'Makine Öğrenmesi & Derin Öğrenme', desc: 'ML/DL mimarileri ve iş dünyası uygulamaları' },
+      { num: '03', name: 'LLM Nedir?', desc: 'Büyük dil modelleri, GPT ve ChatGPT ekosistemi' },
+      { num: '04', name: 'Prompt Mühendisliği', desc: 'Yapı, bileşenler ve etkili prompt teknikleri' },
+      { num: '05', name: 'Agent Kavramı & Uygulamaları', desc: 'Otonom ajanlar ve iş süreçlerine entegrasyon' },
+      { num: '06', name: 'Popüler Yapay Zekâ Araçları', desc: 'ChatGPT, Claude, Gemini ve iş araçları karşılaştırması' },
+      { num: '07', name: 'Kuruma Özel AI Senaryoları', desc: `${d.sektor} sektörüne yönelik canlı kullanım senaryoları` },
+      { num: '08', name: 'Soru–Cevap & Değerlendirme', desc: 'Açık forum, vaka tartışmaları, sertifika töreni' },
+    ];
+
+    const modulesHTML = modules.map(m => `
+      <div class="tb-module-item">
+        <div class="tb-mod-num">MOD-${m.num}</div>
+        <div>
+          <div class="tb-mod-name">${m.name}</div>
+          <div class="tb-mod-desc">${m.desc}</div>
+        </div>
+      </div>`).join('');
+
+    const priceRowsHTML = ozelFiyat ? `
+      <tr><td>Workshop Eğitim Paketi (50+ kişi)</td><td>1 Gün</td><td style="text-align:right">Özel Fiyatlandırma</td></tr>
+      <tr><td>Workshop Materyalleri & Sertifikalar</td><td>Dahil</td><td style="text-align:right">—</td></tr>
+      <tr class="total-row"><td colspan="2"><strong>TOPLAM (KDV dahil)</strong></td><td><strong>Size Özel Teklif İçin İletişime Geçin</strong></td></tr>
+    ` : `
+      <tr><td>Workshop Eğitim Paketi (${fp.katilimci})</td><td>1 Gün / 8 Modül</td><td>${fmt(baz)}</td></tr>
+      <tr><td>Basılı Materyaller, Sertifika & Dijital Kaynaklar</td><td>Katılımcı başına</td><td>${fmt(materyalUcreti)}</td></tr>
+      <tr><td style="color:#999">Ara Toplam</td><td></td><td style="color:#999">${fmt(araToplamTutar)}</td></tr>
+      <tr><td style="color:#999">KDV (%20)</td><td></td><td style="color:#999">${fmt(kdv)}</td></tr>
+      <tr class="total-row"><td colspan="2"><strong>GENEL TOPLAM (KDV Dahil)</strong></td><td><strong>${fmt(toplamTutar)}</strong></td></tr>
+    `;
+
+    const notHTML = d.not ? `
+      <div class="tb-section">
+        <div class="tb-section-label">Özel Talepler</div>
+        <div style="font-size:0.85rem;color:#444;line-height:1.8;padding:16px 20px;background:#f8f7f5;border-left:3px solid #C9A84C;">${d.not}</div>
+      </div>` : '';
+
+    document.getElementById('teklif-belge').innerHTML = `
+      <div class="tb-header">
+        <div>
+          <div class="tb-logo-text">Nexus <span style="color:#fff">AI</span></div>
+          <div class="tb-logo-sub">// YAPAY ZEKA DANIŞMANLIK</div>
+        </div>
+        <div class="tb-header-meta">
+          <div class="tb-doc-title">// Hizmet Teklifi</div>
+          <div class="tb-doc-no">${teklifNo}</div>
+          <div class="tb-doc-date">Tarih: ${tarihStr}</div>
+        </div>
+      </div>
+      <div class="tb-gold-line"></div>
+
+      <div class="tb-body">
+
+        <div class="tb-section">
+          <div class="tb-section-label">Taraflar</div>
+          <div class="tb-parties">
+            <div class="tb-party-box">
+              <div class="tb-party-role">Hizmet Sağlayıcı</div>
+              <div class="tb-party-name">Nexus AI Danışmanlık</div>
+              <div class="tb-party-detail">info@nexusai.com.tr<br>Bursa, Türkiye</div>
+            </div>
+            <div class="tb-party-box">
+              <div class="tb-party-role">Müşteri</div>
+              <div class="tb-party-name">${d.sirket}</div>
+              <div class="tb-party-detail">
+                ${d.ad}${d.unvan ? ' — ' + d.unvan : ''}<br>
+                ${d.email}${d.telefon ? '<br>' + d.telefon : ''}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tb-section">
+          <div class="tb-section-label">Teklif Özeti</div>
+          <div class="tb-scope-intro">
+            Bu teklif, <strong>${d.sirket}</strong> bünyesindeki ekiplere yönelik hazırlanmış, <strong>${d.sektor}</strong> sektörüne özel vaka çalışmaları ve uygulamalı deneyimler içeren <strong>1 Günlük Yapay Zeka Farkındalık &amp; Uygulama Workshop'u</strong> kapsamında sunulmaktadır. Program, katılımcıların yapay zeka okuryazarlığını artırmayı, günlük iş süreçlerinde AI araçlarını etkin kullanmayı ve kuruma özgü dönüşüm fırsatlarını keşfetmeyi hedefler.
+          </div>
+        </div>
+
+        <div class="tb-section">
+          <div class="tb-section-label">Program İçeriği — 8 Modül</div>
+          <div class="tb-modules">${modulesHTML}</div>
+        </div>
+
+        <div class="tb-section">
+          <div class="tb-section-label">Lojistik & Program Detayları</div>
+          <div class="tb-logistics">
+            <div class="tb-logi-item">
+              <div class="tb-logi-val">1 Gün</div>
+              <div class="tb-logi-key">Süre</div>
+            </div>
+            <div class="tb-logi-item">
+              <div class="tb-logi-val">${fp.katilimci}</div>
+              <div class="tb-logi-key">Katılımcı</div>
+            </div>
+            <div class="tb-logi-item">
+              <div class="tb-logi-val" style="font-size:1rem;">${workshopTarihi}</div>
+              <div class="tb-logi-key">Tarih</div>
+            </div>
+            <div class="tb-logi-item">
+              <div class="tb-logi-val" style="font-size:0.95rem;">${lokasyonMeyin}</div>
+              <div class="tb-logi-key">Lokasyon</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tb-section">
+          <div class="tb-section-label">Fiyatlandırma</div>
+          <table class="tb-price-table">
+            <thead><tr><th>Hizmet Kalemi</th><th>Detay</th><th>Tutar</th></tr></thead>
+            <tbody>${priceRowsHTML}</tbody>
+          </table>
+        </div>
+
+        ${notHTML}
+
+        <div class="tb-section">
+          <div class="tb-section-label">Koşullar & Notlar</div>
+          <div class="tb-terms">
+            <div class="tb-term-item"><strong>Ödeme</strong>Workshoptan 5 iş günü önce fatura kesimi. %50 ön ödeme, %50 etkinlik günü.</div>
+            <div class="tb-term-item"><strong>İptal / Erteleme</strong>10 gün öncesine kadar ücretsiz. Sonrasında %30 iptal bedeli uygulanır.</div>
+            <div class="tb-term-item"><strong>Dahil Olanlar</strong>Eğitimci ücreti, basılı materyal, sertifika, etkinlik sonrası Q&A desteği (1 ay).</div>
+            <div class="tb-term-item"><strong>Dahil Olmayanlar</strong>Catering, ulaşım (Bursa dışı projelerde ayrıca fiyatlandırılır), salonun kiralama bedeli.</div>
+            <div class="tb-term-item"><strong>Teklif Geçerliliği</strong>${gecerlilikStr} tarihine kadar geçerlidir.</div>
+            <div class="tb-term-item"><strong>Özelleştirme</strong>Program içeriği kurumun ihtiyaçlarına göre adapte edilebilir. Ek modül taleplerine göre fiyat güncellenir.</div>
+          </div>
+        </div>
+
+        <div class="tb-section">
+          <div class="tb-section-label">Onay & İmza</div>
+          <div class="tb-signature">
+            <div class="tb-sig-box">
+              <div class="tb-sig-label">Hizmet Sağlayıcı</div>
+              <div class="tb-sig-space"></div>
+              <div class="tb-sig-name"><strong>Nexus AI Danışmanlık</strong></div>
+            </div>
+            <div class="tb-sig-box">
+              <div class="tb-sig-label">Müşteri</div>
+              <div class="tb-sig-space"></div>
+              <div class="tb-sig-name"><strong>${d.sirket}</strong>${d.ad ? '<br>' + d.ad : ''}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="tb-footer">
+        <div class="tb-footer-text">NEXUS AI · info@nexusai.com.tr · bursa.nexusai.com.tr</div>
+        <div class="tb-footer-validity">Geçerlilik: ${gecerlilikStr} · ${teklifNo}</div>
+      </div>
+    `;
+
+    document.getElementById('teklif-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeTeklif() {
+    document.getElementById('teklif-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ESC ile modal kapat
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeTeklif();
+  });
 </script>
 
 </body>
