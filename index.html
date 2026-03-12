@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus AI — Yapay Zeka Dönüşüm Ortağınız</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #06080F;
+      --surface: #0C1425;
+      --surface-2: #111D30;
+      --gold: #C9A84C;
+      --gold-light: #E2C06A;
+      --gold-dim: rgba(201,168,76,0.12);
+      --gold-border: rgba(201,168,76,0.25);
+      --white: #F2EDE4;
+      --text: #C8C0B4;
+      --muted: #5E6D80;
+      --cyan: #4ECDC4;
+      --danger: #E05252;
+      --border: rgba(255,255,255,0.06);
+      --radius: 2px;
+      --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(6,8,15,0.92);
+      backdrop-filter: blur(20px);
+      border-color: var(--border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-cta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold-border);
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: var(--transition);
+      background: transparent;
+      text-decoration: none;
+    }
+    .nav-cta:hover {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 48px 80px;
+      overflow: hidden;
+    }
+
+    /* Diagonal lines */
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 800px; height: 800px;
+      background: conic-gradient(from 45deg, transparent 0%, rgba(201,168,76,0.03) 25%, transparent 50%);
+      animation: rotate 30s linear infinite;
+    }
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    /* Geometric accent */
+    .hero-geo {
+      position: absolute;
+      right: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 480px;
+      height: 480px;
+      opacity: 0.15;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+
+    .hero-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 40px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text);
+      max-width: 500px;
+      margin-bottom: 48px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      border: none;
+      padding: 16px 36px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201,168,76,0.3);
+    }
+
+    .btn-secondary {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 16px 36px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-secondary:hover {
+      border-color: var(--gold-border);
+      background: var(--gold-dim);
+    }
+
+    /* Stats row */
+    .hero-stats {
+      margin-top: 72px;
+      display: flex;
+      gap: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ── SECTION SHARED ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-title em { font-style: italic; color: var(--gold-light); }
+
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text);
+      max-width: 560px;
+      line-height: 1.8;
+    }
+
+    /* ── WORKSHOP ── */
+    #workshop {
+      padding: 120px 0;
+    }
+
+    .workshop-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 72px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .module-card {
+      background: var(--surface);
+      padding: 36px 32px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+    .module-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: var(--transition);
+    }
+    .module-card:hover {
+      background: var(--surface-2);
+    }
+    .module-card:hover::before { transform: scaleX(1); }
+
+    .module-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      margin-bottom: 20px;
+    }
+
+    .module-icon {
+      width: 40px; height: 40px;
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+
+    .module-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .module-desc {
+      font-size: 0.82rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── CTA STRIP ── */
+    #cta-strip {
+      padding: 100px 0;
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(12,20,37,0.4) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .cta-text {}
+    .cta-big-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .cta-big-title em { font-style: italic; color: var(--gold-light); }
+    .cta-desc { font-size: 0.9rem; color: var(--text); max-width: 440px; }
+
+    /* ── SURVEY ── */
+    #survey {
+      padding: 120px 0;
+    }
+
+    .survey-wrapper {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .survey-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    /* Progress */
+    .progress-bar-wrap {
+      margin-bottom: 48px;
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .progress-track {
+      height: 2px;
+      background: var(--border);
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--gold);
+      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* Steps */
+    .survey-step {
+      display: none;
+      animation: fadeInUp 0.4s ease;
+    }
+    .survey-step.active { display: block; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-question {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .step-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      margin-bottom: 36px;
+      font-style: italic;
+    }
+
+    .options-grid {
+      display: grid;
+      gap: 10px;
+    }
+    .options-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+
+    .option-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 18px 24px;
+      text-align: left;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .option-btn:hover {
+      border-color: var(--gold-border);
+      background: var(--surface-2);
+    }
+    .option-btn.selected {
+      border-color: var(--gold);
+      background: var(--gold-dim);
+      color: var(--gold-light);
+    }
+    .option-letter {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      min-width: 20px;
+      transition: var(--transition);
+    }
+    .option-btn.selected .option-letter { color: var(--gold); }
+
+    /* Scale options */
+    .scale-options {
+      display: flex;
+      gap: 8px;
+    }
+    .scale-btn {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 20px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    .scale-btn:hover { border-color: var(--gold-border); background: var(--surface-2); }
+    .scale-btn.selected { border-color: var(--gold); background: var(--gold-dim); color: var(--gold-light); }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-top: 8px;
+      padding: 0 4px;
+    }
+
+    /* Multi select note */
+    .multi-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+
+    /* Step nav */
+    .step-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-back {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-back:hover { color: var(--white); }
+    .btn-back:disabled { opacity: 0.2; cursor: default; }
+
+    .btn-next {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      border: none;
+      padding: 14px 32px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-next:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+    }
+    .btn-next:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ── LEAD FORM ── */
+    #lead-form-section {
+      display: none;
+      padding: 80px 0 120px;
+    }
+
+    .lead-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .lead-intro {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .lead-intro p {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-top: 12px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+    .field label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .field input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 14px 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+    .field input:focus { border-color: var(--gold-border); background: var(--surface-2); }
+    .field input::placeholder { color: var(--muted); }
+
+    .form-submit {
+      margin-top: 24px;
+      width: 100%;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      border: none;
+      padding: 18px 36px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .form-submit:hover {
+      background: var(--gold-light);
+      box-shadow: 0 8px 32px rgba(201,168,76,0.3);
+    }
+
+    .privacy-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 16px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ── REPORT ── */
+    #report-section {
+      display: none;
+      padding: 80px 0 120px;
+    }
+
+    .report-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .report-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .report-header .section-label {
+      justify-content: center;
+    }
+
+    .report-header .section-label::before { display: none; }
+
+    /* Score ring */
+    .score-ring-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 48px 0;
+    }
+
+    .score-ring-container {
+      position: relative;
+      width: 220px; height: 220px;
+    }
+
+    .score-ring-svg {
+      transform: rotate(-90deg);
+    }
+
+    .score-ring-track {
+      fill: none;
+      stroke: var(--surface-2);
+      stroke-width: 8;
+    }
+
+    .score-ring-fill {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 8;
+      stroke-linecap: butt;
+      stroke-dasharray: 565;
+      stroke-dashoffset: 565;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .score-ring-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .score-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .score-max {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* Level badge */
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-border);
+      padding: 12px 28px;
+      margin: 0 auto 32px;
+    }
+
+    .level-badge-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .level-badge-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    /* Dimensions */
+    .dimensions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 48px 0;
+    }
+
+    .dim-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+
+    .dim-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .dim-bar-track {
+      height: 3px;
+      background: var(--border);
+      margin-bottom: 10px;
+    }
+
+    .dim-bar-fill {
+      height: 100%;
+      background: var(--gold);
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .dim-score-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    /* Recommendations */
+    .recs-section {
+      margin: 48px 0;
+    }
+
+    .recs-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .rec-item {
+      display: flex;
+      gap: 20px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      margin-bottom: 12px;
+      animation: fadeInUp 0.4s ease forwards;
+      opacity: 0;
+    }
+
+    .rec-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--gold);
+      min-width: 32px;
+      padding-top: 2px;
+    }
+
+    .rec-content {}
+    .rec-head {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .rec-body {
+      font-size: 0.82rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* Report CTA */
+    .report-cta {
+      text-align: center;
+      padding: 48px;
+      background: var(--surface);
+      border: 1px solid var(--gold-border);
+      margin-top: 48px;
+    }
+
+    .report-cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .report-cta-title em { font-style: italic; color: var(--gold-light); }
+
+    .report-cta-desc {
+      font-size: 0.88rem;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-copy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      #hero { padding: 100px 24px 60px; }
+      .container { padding: 0 24px; }
+      .hero-geo { display: none; }
+      .hero-stats { gap: 28px; flex-wrap: wrap; }
+      .modules-grid { grid-template-columns: 1fr; }
+      .cta-inner { flex-direction: column; }
+      .form-row { grid-template-columns: 1fr; }
+      .dimensions-grid { grid-template-columns: 1fr; }
+      .options-grid.cols-2 { grid-template-columns: 1fr; }
+      footer { flex-direction: column; text-align: center; padding: 32px 24px; }
+      .workshop-header { flex-direction: column; }
+    }
+
+    /* Utility */
+    .text-center { text-align: center; }
+    .mt-4 { margin-top: 4px; }
+    .mt-8 { margin-top: 8px; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Nexus <span>AI</span></div>
+  <a href="#survey" class="nav-cta">Olgunluk Testi →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <svg class="hero-geo" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="240,20 460,130 460,350 240,460 20,350 20,130" stroke="#C9A84C" stroke-width="1" fill="none"/>
+    <polygon points="240,60 420,150 420,330 240,420 60,330 60,150" stroke="#C9A84C" stroke-width="0.5" fill="none"/>
+    <polygon points="240,100 380,170 380,310 240,380 100,310 100,170" stroke="#C9A84C" stroke-width="0.5" fill="none" opacity="0.6"/>
+    <line x1="240" y1="20" x2="240" y2="460" stroke="#C9A84C" stroke-width="0.4" opacity="0.4"/>
+    <line x1="20" y1="240" x2="460" y2="240" stroke="#C9A84C" stroke-width="0.4" opacity="0.4"/>
+    <line x1="460" y1="130" x2="20" y2="350" stroke="#C9A84C" stroke-width="0.4" opacity="0.4"/>
+    <line x1="20" y1="130" x2="460" y2="350" stroke="#C9A84C" stroke-width="0.4" opacity="0.4"/>
+    <circle cx="240" cy="240" r="40" stroke="#C9A84C" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <circle cx="240" cy="240" r="4" fill="#C9A84C" opacity="0.8"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-label">Yapay Zeka Danışmanlığı</div>
+    <h1 class="hero-title">
+      Yapay zeka<br>
+      <em>dönüşümünüz</em><br>
+      buradan başlar.
+    </h1>
+    <p class="hero-subtitle">
+      Kurumunuzun yapay zeka olgunluk seviyesini analiz ediyor, stratejik yol haritanızı oluşturuyor ve ekibinizi geleceğe hazırlıyoruz.
+    </p>
+    <div class="hero-actions">
+      <a href="#survey" class="btn-primary">Ücretsiz Olgunluk Testi →</a>
+      <a href="#workshop" class="btn-secondary">Workshop İçeriği</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Workshop Modülü</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Olgunluk Seviyesi</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">%100</div>
+        <div class="stat-label">Kuruma Özel</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOP -->
+<section id="workshop">
+  <div class="container">
+    <div class="workshop-header reveal">
+      <div>
+        <div class="section-label">Workshop Programı</div>
+        <h2 class="section-title">Yapay Zekaya<br><em>kapsamlı bir bakış</em></h2>
+      </div>
+      <p class="section-subtitle">
+        Teoriden pratiğe, kavramlardan kuruma özgü senaryolara uzanan sekiz modüllük yoğun bir program.
+      </p>
+    </div>
+
+    <div class="modules-grid">
+      <div class="module-card reveal">
+        <div class="module-num">// MOD-01</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="18" stroke="#C9A84C" stroke-width="1.5"/>
+          <circle cx="20" cy="20" r="6" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="20" y1="2" x2="20" y2="14" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="20" y1="26" x2="20" y2="38" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="2" y1="20" x2="14" y2="20" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="26" y1="20" x2="38" y2="20" stroke="#C9A84C" stroke-width="1.5"/>
+        </svg>
+        <div class="module-title">Yapay Zekâ Nedir?</div>
+        <div class="module-desc">Temel kavramlar, tarihsel gelişim ve günümüz yapay zekâsının iş dünyasındaki yeri.</div>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">// MOD-02</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <rect x="4" y="4" width="14" height="14" stroke="#C9A84C" stroke-width="1.5"/>
+          <rect x="22" y="4" width="14" height="14" stroke="#C9A84C" stroke-width="1.5"/>
+          <rect x="4" y="22" width="14" height="14" stroke="#C9A84C" stroke-width="1.5"/>
+          <rect x="22" y="22" width="14" height="14" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="11" y1="18" x2="11" y2="22" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="29" y1="18" x2="29" y2="22" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="11" y1="22" x2="29" y2="22" stroke="#C9A84C" stroke-width="1.5"/>
+        </svg>
+        <div class="module-title">Makine Öğrenmesi & Derin Öğrenme</div>
+        <div class="module-desc">ML ve DL'nin temel prensipleri; algoritmalar, veri ve model kavramlarına giriş.</div>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">// MOD-03</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <path d="M6 8 L34 8 L34 28 L6 28 Z" stroke="#C9A84C" stroke-width="1.5" fill="none"/>
+          <path d="M12 28 L10 34 M28 28 L30 34" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="10" y1="34" x2="30" y2="34" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="14" y1="16" x2="26" y2="16" stroke="#C9A84C" stroke-width="2"/>
+          <line x1="14" y1="20" x2="22" y2="20" stroke="#C9A84C" stroke-width="2"/>
+        </svg>
+        <div class="module-title">LLM Nedir?</div>
+        <div class="module-desc">Büyük dil modelleri: nasıl çalışır, neye yarar, nerede kullanılır ve ne kadar güvenilirdir?</div>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">// MOD-04</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <path d="M8 12 L32 12" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M8 18 L24 18" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M8 24 L28 24" stroke="#C9A84C" stroke-width="1.5"/>
+          <circle cx="32" cy="28" r="6" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="35" y1="31" x2="38" y2="34" stroke="#C9A84C" stroke-width="2"/>
+        </svg>
+        <div class="module-title">Prompt Mühendisliği</div>
+        <div class="module-desc">Prompt nedir, nasıl yazılır? Etkili prompt yapısının bileşenleri ve ileri teknikler.</div>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">// MOD-05</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="8" stroke="#C9A84C" stroke-width="1.5"/>
+          <circle cx="8" cy="10" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+          <circle cx="32" cy="10" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+          <circle cx="8" cy="30" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+          <circle cx="32" cy="30" r="4" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="12" y1="13" x2="16" y2="16" stroke="#C9A84C" stroke-width="1"/>
+          <line x1="28" y1="13" x2="24" y2="16" stroke="#C9A84C" stroke-width="1"/>
+          <line x1="12" y1="27" x2="16" y2="24" stroke="#C9A84C" stroke-width="1"/>
+          <line x1="28" y1="27" x2="24" y2="24" stroke="#C9A84C" stroke-width="1"/>
+        </svg>
+        <div class="module-title">Agent Kavramı & Uygulamaları</div>
+        <div class="module-desc">Otonom yapay zeka ajanları: mimarisi, kullanım alanları ve iş süreçlerine entegrasyonu.</div>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">// MOD-06</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <rect x="6" y="14" width="12" height="18" rx="1" stroke="#C9A84C" stroke-width="1.5"/>
+          <rect x="22" y="8" width="12" height="24" rx="1" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="6" y1="28" x2="18" y2="28" stroke="#C9A84C" stroke-width="1"/>
+          <line x1="22" y1="22" x2="34" y2="22" stroke="#C9A84C" stroke-width="1"/>
+        </svg>
+        <div class="module-title">Popüler Yapay Zekâ Araçları</div>
+        <div class="module-desc">ChatGPT, Claude, Gemini, Midjourney ve iş dünyası araçlarının karşılaştırmalı incelemesi.</div>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">// MOD-07</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <path d="M4 36 L4 4 L36 4" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M4 28 L14 18 L22 24 L34 10" stroke="#C9A84C" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="34" cy="10" r="3" fill="#C9A84C"/>
+        </svg>
+        <div class="module-title">Kuruma Özel AI Senaryoları</div>
+        <div class="module-desc">Organizasyonunuza özgü kullanım senaryolarının keşfi ve canlı kullanıcı deneyimleri seansı.</div>
+      </div>
+
+      <div class="module-card reveal">
+        <div class="module-num">// MOD-08</div>
+        <svg class="module-icon" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="16" r="10" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M20 26 L20 36" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="14" y1="36" x2="26" y2="36" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="17" y1="13" x2="23" y2="13" stroke="#C9A84C" stroke-width="2"/>
+          <line x1="20" y1="13" x2="20" y2="19" stroke="#C9A84C" stroke-width="2"/>
+        </svg>
+        <div class="module-title">Soru–Cevap & Değerlendirme</div>
+        <div class="module-desc">Açık forum, vaka tartışmaları ve katılımcı değerlendirme bölümü.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section id="cta-strip">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="cta-text">
+        <h2 class="cta-big-title">Kurumunuz yapay zekaya<br><em>ne kadar hazır?</em></h2>
+        <p class="cta-desc">5 dakikalık ücretsiz testimizi tamamlayın, kişiselleştirilmiş AI Olgunluk Raporunuzu anında alın.</p>
+      </div>
+      <a href="#survey" class="btn-primary" style="white-space: nowrap;">Testi Başlat →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SURVEY -->
+<section id="survey">
+  <div class="container">
+    <div class="survey-wrapper">
+      <div class="survey-header reveal">
+        <div class="section-label" style="justify-content:center;">
+          <span style="width:32px;height:1px;background:var(--gold);display:inline-block;"></span>
+          AI Olgunluk Testi
+          <span style="width:32px;height:1px;background:var(--gold);display:inline-block;"></span>
+        </div>
+        <h2 class="section-title">Yapay Zeka <em>Hazırlık Analiziniz</em></h2>
+        <p class="section-subtitle" style="margin: 0 auto; text-align:center;">8 soru, kişiselleştirilmiş rapor. Hiçbir ücret yok.</p>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-bar-wrap">
+        <div class="progress-meta">
+          <span id="step-counter">Soru 1 / 8</span>
+          <span id="step-pct">0%</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- STEP 1: Sektör -->
+      <div class="survey-step active" id="step-1">
+        <h3 class="step-question">Şirketinizin faaliyet gösterdiği sektör hangisidir?</h3>
+        <p class="step-hint">// bir seçenek işaretleyin</p>
+        <div class="options-grid cols-2" data-step="1" data-type="single">
+          <button class="option-btn" data-value="2"><span class="option-letter">A</span>Üretim & Sanayi</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">B</span>Finans & Sigortacılık</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">C</span>Sağlık & İlaç</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">D</span>Perakende & E-Ticaret</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">E</span>Lojistik & Tedarik Zinciri</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">F</span>Eğitim & Kamu</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">G</span>Teknoloji & Yazılım</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">H</span>Diğer</button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" disabled>← Geri</button>
+          <button class="btn-next" id="next-1" disabled>İleri →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Çalışan sayısı -->
+      <div class="survey-step" id="step-2">
+        <h3 class="step-question">Şirketinizin çalışan sayısı nedir?</h3>
+        <p class="step-hint">// bir seçenek işaretleyin</p>
+        <div class="options-grid" data-step="2" data-type="single">
+          <button class="option-btn" data-value="0"><span class="option-letter">A</span>1–10 çalışan</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">B</span>11–50 çalışan</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">C</span>51–200 çalışan</button>
+          <button class="option-btn" data-value="3"><span class="option-letter">D</span>201–500 çalışan</button>
+          <button class="option-btn" data-value="3"><span class="option-letter">E</span>500+ çalışan</button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(1)">← Geri</button>
+          <button class="btn-next" id="next-2" disabled>İleri →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Mevcut AI kullanımı -->
+      <div class="survey-step" id="step-3">
+        <h3 class="step-question">Şu anda yapay zekâ araçlarını kullanıyor musunuz?</h3>
+        <p class="step-hint">// bir seçenek işaretleyin</p>
+        <div class="options-grid" data-step="3" data-type="single">
+          <button class="option-btn" data-value="0"><span class="option-letter">A</span>Hayır, hiç kullanmıyoruz</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">B</span>Bireysel düzeyde bazı çalışanlar deniyor</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">C</span>Belirli departmanlarda aktif kullanıyoruz</button>
+          <button class="option-btn" data-value="3"><span class="option-letter">D</span>Şirket genelinde entegre bir şekilde kullanıyoruz</button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(2)">← Geri</button>
+          <button class="btn-next" id="next-3" disabled>İleri →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Bilgi seviyesi -->
+      <div class="survey-step" id="step-4">
+        <h3 class="step-question">Ekibinizin genel yapay zekâ farkındalık seviyesini nasıl değerlendirirsiniz?</h3>
+        <p class="step-hint">// 1 = Çok düşük, 5 = Çok yüksek</p>
+        <div class="scale-options" data-step="4" data-type="scale">
+          <button class="scale-btn" data-value="0">1</button>
+          <button class="scale-btn" data-value="1">2</button>
+          <button class="scale-btn" data-value="2">3</button>
+          <button class="scale-btn" data-value="2">4</button>
+          <button class="scale-btn" data-value="3">5</button>
+        </div>
+        <div class="scale-labels">
+          <span>Çok Düşük</span>
+          <span>Çok Yüksek</span>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(3)">← Geri</button>
+          <button class="btn-next" id="next-4" disabled>İleri →</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Hedef kullanım alanları -->
+      <div class="survey-step" id="step-5">
+        <h3 class="step-question">Yapay zekâyı hangi alanlarda kullanmak istiyorsunuz?</h3>
+        <p class="step-hint">// birden fazla seçenek işaretleyebilirsiniz</p>
+        <div class="multi-note">↓ Çoklu seçim</div>
+        <div class="options-grid cols-2" data-step="5" data-type="multi">
+          <button class="option-btn" data-value="1"><span class="option-letter">A</span>Müşteri Hizmetleri</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">B</span>Pazarlama & İçerik</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">C</span>Operasyonel Verimlilik</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">D</span>Veri Analizi & Raporlama</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">E</span>İK & İşe Alım</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">F</span>Ürün Geliştirme</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">G</span>Risk Yönetimi</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">H</span>Henüz bilmiyorum</button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(4)">← Geri</button>
+          <button class="btn-next" id="next-5" disabled>İleri →</button>
+        </div>
+      </div>
+
+      <!-- STEP 6: Engeller -->
+      <div class="survey-step" id="step-6">
+        <h3 class="step-question">Yapay zekâ benimsemesinde karşılaştığınız en büyük engel nedir?</h3>
+        <p class="step-hint">// bir seçenek işaretleyin</p>
+        <div class="options-grid" data-step="6" data-type="single">
+          <button class="option-btn" data-value="0"><span class="option-letter">A</span>Bilgi ve farkındalık eksikliği</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">B</span>Bütçe kısıtlamaları</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">C</span>Teknik altyapı yetersizliği</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">D</span>Değişime direnç / kültürel engeller</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">E</span>Veri kalitesi ve gizlilik endişeleri</button>
+          <button class="option-btn" data-value="3"><span class="option-letter">F</span>Önemli bir engel görmüyorum</button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(5)">← Geri</button>
+          <button class="btn-next" id="next-6" disabled>İleri →</button>
+        </div>
+      </div>
+
+      <!-- STEP 7: Bütçe -->
+      <div class="survey-step" id="step-7">
+        <h3 class="step-question">Yapay zekâ için 12 ay içinde yatırım planınız var mı?</h3>
+        <p class="step-hint">// bir seçenek işaretleyin</p>
+        <div class="options-grid" data-step="7" data-type="single">
+          <button class="option-btn" data-value="0"><span class="option-letter">A</span>Hayır, yakın vadede plan yok</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">B</span>Küçük ölçekli deneme bütçesi düşünüyoruz</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">C</span>Orta ölçekli bir yatırım planlıyoruz</button>
+          <button class="option-btn" data-value="3"><span class="option-letter">D</span>Stratejik öncelik olarak büyük yatırım planlıyoruz</button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(6)">← Geri</button>
+          <button class="btn-next" id="next-7" disabled>İleri →</button>
+        </div>
+      </div>
+
+      <!-- STEP 8: Strateji -->
+      <div class="survey-step" id="step-8">
+        <h3 class="step-question">Şirketinizde resmi bir yapay zekâ stratejisi veya yol haritası var mı?</h3>
+        <p class="step-hint">// bir seçenek işaretleyin</p>
+        <div class="options-grid" data-step="8" data-type="single">
+          <button class="option-btn" data-value="0"><span class="option-letter">A</span>Hayır, böyle bir çalışma yok</button>
+          <button class="option-btn" data-value="1"><span class="option-letter">B</span>Konuşuyoruz ama henüz somutlaşmadı</button>
+          <button class="option-btn" data-value="2"><span class="option-letter">C</span>Erken aşama bir strateji oluşturduk</button>
+          <button class="option-btn" data-value="3"><span class="option-letter">D</span>Kapsamlı bir AI stratejimiz mevcut</button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="goStep(7)">← Geri</button>
+          <button class="btn-next" id="next-8" disabled onclick="showLeadForm()">Raporu Oluştur →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LEAD FORM -->
+<section id="lead-form-section">
+  <div class="container">
+    <div class="lead-wrapper">
+      <div class="lead-intro">
+        <div class="section-label" style="justify-content:center;">
+          <span style="width:32px;height:1px;background:var(--gold);display:inline-block;"></span>
+          Neredeyse tamam
+          <span style="width:32px;height:1px;background:var(--gold);display:inline-block;"></span>
+        </div>
+        <h2 class="section-title" style="font-size:2rem;">Raporunuz hazırlanıyor</h2>
+        <p>Kişiselleştirilmiş AI Olgunluk Raporunuzu görüntülemek için bilgilerinizi bırakın. Uzmanlarımız sizinle iletişime geçecek.</p>
+      </div>
+
+      <form id="lead-form" onsubmit="submitLead(event)">
+        <div class="form-row">
+          <div class="field">
+            <label>Ad Soyad *</label>
+            <input type="text" id="f-name" placeholder="Ahmet Yılmaz" required>
+          </div>
+          <div class="field">
+            <label>Unvan</label>
+            <input type="text" id="f-title" placeholder="Genel Müdür">
+          </div>
+        </div>
+        <div class="field">
+          <label>Şirket Adı *</label>
+          <input type="text" id="f-company" placeholder="Şirketinizin adı" required>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>E-posta *</label>
+            <input type="email" id="f-email" placeholder="ahmet@sirket.com" required>
+          </div>
+          <div class="field">
+            <label>Telefon</label>
+            <input type="tel" id="f-phone" placeholder="+90 532 000 00 00">
+          </div>
+        </div>
+        <button type="submit" class="form-submit">Raporumu Görüntüle →</button>
+        <p class="privacy-note">Bilgileriniz yalnızca danışmanlık amacıyla kullanılır. Asla satılmaz.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- REPORT -->
+<section id="report-section">
+  <div class="container">
+    <div class="report-wrapper">
+      <div class="report-header">
+        <div class="section-label">AI Kullanım Olgunluğu Raporu</div>
+        <h2 class="section-title" id="report-user-title">Raporunuz</h2>
+        <p class="section-subtitle" style="margin: 0 auto; text-align:center;" id="report-company-subtitle"></p>
+      </div>
+
+      <!-- Level badge -->
+      <div style="display:flex;justify-content:center;margin-bottom:16px;">
+        <div class="level-badge">
+          <span class="level-badge-label">Seviye</span>
+          <span class="level-badge-name" id="level-name">—</span>
+        </div>
+      </div>
+
+      <!-- Score ring -->
+      <div class="score-ring-wrap">
+        <div class="score-ring-container">
+          <svg class="score-ring-svg" width="220" height="220" viewBox="0 0 220 220">
+            <circle class="score-ring-track" cx="110" cy="110" r="90"/>
+            <circle class="score-ring-fill" id="score-ring-fill" cx="110" cy="110" r="90"/>
+          </svg>
+          <div class="score-ring-center">
+            <div class="score-num" id="score-display">0</div>
+            <div class="score-max">/ 100</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.1em;margin-top:4px;">OLGUNLUK SKORU</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level description -->
+      <div style="text-align:center;max-width:520px;margin:0 auto 48px;font-size:0.9rem;color:var(--text);line-height:1.8;" id="level-desc"></div>
+
+      <!-- Dimensions -->
+      <div class="dimensions-grid" id="dimensions-grid">
+        <!-- filled by JS -->
+      </div>
+
+      <!-- Recommendations -->
+      <div class="recs-section">
+        <h3 class="recs-title">Stratejik <em style="font-style:italic;color:var(--gold-light);">Öneriler</em></h3>
+        <div id="recs-list"><!-- filled by JS --></div>
+      </div>
+
+      <!-- Final CTA -->
+      <div class="report-cta">
+        <h3 class="report-cta-title">Bir sonraki adımı<br><em>birlikte atalım.</em></h3>
+        <p class="report-cta-desc">Ekibimiz raporunuzu inceleyerek sizinle kişiselleştirilmiş bir yol haritası oluşturmak için iletişime geçecek.</p>
+        <a href="mailto:info@nexusai.com.tr" class="btn-primary">Uzmanla Görüş →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">NEXUS AI</div>
+  <div class="footer-copy">© 2025 Nexus AI Danışmanlık. Tüm hakları saklıdır.</div>
+</footer>
+
+<script>
+  // ── State ──
+  const answers = {};      // step -> points
+  const multiSel = {};     // step -> Set of selected indices
+
+  let currentStep = 1;
+  const totalSteps = 8;
+
+  // ── Nav scroll ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Option selection ──
+  document.querySelectorAll('.options-grid').forEach(grid => {
+    const step = +grid.dataset.step;
+    const type = grid.dataset.type;
+
+    grid.querySelectorAll('.option-btn').forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        if (type === 'single') {
+          grid.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          answers[step] = +btn.dataset.value;
+        } else {
+          // multi
+          if (!multiSel[step]) multiSel[step] = new Set();
+          btn.classList.toggle('selected');
+          if (btn.classList.contains('selected')) {
+            multiSel[step].add(idx);
+          } else {
+            multiSel[step].delete(idx);
+          }
+          // score = min(3, count of selected)
+          answers[step] = Math.min(3, multiSel[step].size);
+        }
+        updateNextBtn(step);
+      });
+    });
+  });
+
+  // Scale
+  document.querySelectorAll('.scale-options').forEach(wrap => {
+    const step = +wrap.dataset.step;
+    wrap.querySelectorAll('.scale-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        wrap.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        answers[step] = +btn.dataset.value;
+        updateNextBtn(step);
+      });
+    });
+  });
+
+  function updateNextBtn(step) {
+    const btn = document.getElementById('next-' + step);
+    if (btn) btn.disabled = answers[step] === undefined;
+  }
+
+  // ── Step navigation ──
+  function goStep(n) {
+    document.getElementById('step-' + currentStep).classList.remove('active');
+    currentStep = n;
+    document.getElementById('step-' + currentStep).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: document.getElementById('survey').offsetTop - 80, behavior: 'smooth' });
+  }
+
+  // Wire next buttons
+  for (let i = 1; i <= 7; i++) {
+    const btn = document.getElementById('next-' + i);
+    if (btn) {
+      const next = i + 1;
+      btn.addEventListener('click', () => { if (!btn.disabled) goStep(next); });
+    }
+  }
+
+  // Step 8 next
+  document.getElementById('next-8').addEventListener('click', () => {
+    if (!document.getElementById('next-8').disabled) showLeadForm();
+  });
+
+  function updateProgress() {
+    const pct = Math.round(((currentStep - 1) / totalSteps) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('step-counter').textContent = `Soru ${currentStep} / ${totalSteps}`;
+    document.getElementById('step-pct').textContent = pct + '%';
+  }
+
+  // ── Show lead form ──
+  function showLeadForm() {
+    document.getElementById('survey').style.display = 'none';
+    const lead = document.getElementById('lead-form-section');
+    lead.style.display = 'block';
+    lead.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── Submit lead ──
+  function submitLead(e) {
+    e.preventDefault();
+    const name = document.getElementById('f-name').value;
+    const company = document.getElementById('f-company').value;
+    generateReport(name, company);
+  }
+
+  // ── Report generation ──
+  function generateReport(name, company) {
+    document.getElementById('lead-form-section').style.display = 'none';
+    const section = document.getElementById('report-section');
+    section.style.display = 'block';
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Compute score
+    let raw = 0;
+    for (let i = 1; i <= totalSteps; i++) {
+      raw += (answers[i] || 0);
+    }
+    // max raw = 8 * 3 = 24 → normalize to 100
+    const score = Math.round((raw / 24) * 100);
+
+    // Determine level
+    let level, levelDesc, recs;
+    if (score < 25) {
+      level = 'Başlangıç';
+      levelDesc = `${name} hanımefendi/beyefendi, analiz sonuçlarına göre organizasyonunuz yapay zeka yolculuğunun başında bulunmaktadır. Bu, büyük bir fırsat alanıdır — doğru adımlarla hızlı ilerleme kaydedebilirsiniz.`;
+      recs = [
+        { head: 'Farkındalık Eğitimi', body: 'Öncelikli adım, tüm seviyeler için temel AI okuryazarlığı eğitimi organize etmektir. Workshop programımız bu ihtiyacı karşılamak için tasarlanmıştır.' },
+        { head: 'Kullanım Senaryosu Haritalaması', body: 'Kurumunuzdaki yüksek etkili, düşük karmaşıklıklı AI kullanım alanlarını belirleyerek hızlı kazanımlar elde edin.' },
+        { head: 'Pilot Proje Başlatın', body: 'Tek bir departmandan başlayarak somut bir AI pilot projesi yürütün. Başarı, organizasyon genelinde benimsemeyi kolaylaştırır.' },
+      ];
+    } else if (score < 50) {
+      level = 'Gelişen';
+      levelDesc = `${name} hanımefendi/beyefendi, organizasyonunuz yapay zeka farkındalığı oluşturmuş ve ilk adımları atmış durumda. Şimdi bu çabayı sistematik bir stratejiye dönüştürme vakti.`;
+      recs = [
+        { head: 'Strateji Belgesi Oluşturun', body: 'Dağınık bireysel kullanımı, şirket çapında bir AI stratejisine dönüştürün. Öncelikli kullanım alanlarını, sorumluları ve başarı metriklerini belirleyin.' },
+        { head: 'AI Şampiyonları Geliştirin', body: 'Her departmanda AI süreçlerini koordine edecek "şampiyon" çalışanlar yetiştirin. Bilgi yayılımı böyle hızlanır.' },
+        { head: 'Veri Altyapısını Güçlendirin', body: 'AI sistemlerinin etkinliği veri kalitesiyle doğru orantılıdır. Veri yönetimi süreçlerinizi gözden geçirin.' },
+        { head: 'Araç Standardizasyonu', body: 'Kurumda hangi AI araçlarının kullanılacağını standartlaştırın; güvenlik, maliyet ve uyumluluk çerçevesi oluşturun.' },
+      ];
+    } else if (score < 75) {
+      level = 'İleri';
+      levelDesc = `${name} hanımefendi/beyefendi, kurumunuz yapay zekayı birden fazla alanda etkin şekilde kullanmakta ve sistemli bir yaklaşım benimsemektedir. Şimdi ölçeklendirme ve rekabet avantajı yaratma zamanı.`;
+      recs = [
+        { head: 'AI COE (Mükemmellik Merkezi) Kurun', body: 'Yapay zeka yönetimini merkezi bir yapıya kavuşturun; kılavuzlar, en iyi pratikler ve bilgi paylaşım platformu oluşturun.' },
+        { head: 'Özel Model Geliştirme', body: 'Kuruma özgü verilerle fine-tuned modeller ve dahili AI asistanları geliştirmeyi değerlendirin.' },
+        { head: 'ROI Ölçümü & Optimizasyon', body: 'Her AI girişiminin getiri analizini yapın. Kaynakları en yüksek etkili projelere yönlendirin.' },
+        { head: 'Etik AI Çerçevesi', body: 'Algoritmik şeffaflık, veri gizliliği ve önyargı yönetimi konularında kurumsal politikalar geliştirin.' },
+      ];
+    } else {
+      level = 'Lider';
+      levelDesc = `${name} hanımefendi/beyefendi, analiz sonuçları organizasyonunuzun yapay zeka olgunluğu açısından sektörün önde gelen kurumları arasında yer aldığını göstermektedir. Artık AI ile rekabet değil, AI ile yenilik zamanı.`;
+      recs = [
+        { head: 'Yapay Zeka ile Yeni İş Modelleri', body: 'Mevcut süreçleri optimize etmenin ötesine geçin; AI-native ürün ve hizmet modelleri geliştirin.' },
+        { head: 'Ekosistem Liderliği', body: 'Tedarikçi ve iş ortağı ekosisteminizi AI dönüşümünde yönlendirin; sektör standardı oluşturun.' },
+        { head: 'Araştırma & İnovasyon Yatırımı', body: 'Akademi, girişimler veya iç Ar-Ge ile öncü AI çalışmaları yürütün.' },
+        { head: 'Yetenek Çekimi & Marka', body: 'AI liderliğinizi işveren markası olarak konumlandırın; en iyi veri bilimcileri ve AI mühendislerini çekin.' },
+      ];
+    }
+
+    // Dimension scores (derived from answer groups)
+    const dimScores = {
+      'Farkındalık': Math.round(((answers[3]||0) + (answers[4]||0)) / 6 * 100),
+      'Strateji': Math.round(((answers[7]||0) + (answers[8]||0)) / 6 * 100),
+      'Araçlar & Altyapı': Math.round(((answers[3]||0) + (answers[6]||0)) / 6 * 100),
+      'Yatırım Hazırlığı': Math.round(((answers[7]||0) + (answers[2]||0)) / 6 * 100),
+    };
+
+    // Render
+    document.getElementById('report-user-title').textContent = `${name} için Rapor`;
+    document.getElementById('report-company-subtitle').textContent = company;
+    document.getElementById('level-name').textContent = level;
+    document.getElementById('level-desc').textContent = levelDesc;
+
+    // Score ring animation
+    setTimeout(() => {
+      const circumference = 2 * Math.PI * 90; // 565.48
+      const offset = circumference - (score / 100) * circumference;
+      document.getElementById('score-ring-fill').style.strokeDashoffset = offset;
+      animateNum('score-display', 0, score, 1400);
+    }, 300);
+
+    // Dimensions
+    const dimGrid = document.getElementById('dimensions-grid');
+    dimGrid.innerHTML = '';
+    Object.entries(dimScores).forEach(([label, val]) => {
+      const card = document.createElement('div');
+      card.className = 'dim-card';
+      card.innerHTML = `
+        <div class="dim-title">${label}</div>
+        <div class="dim-score-text">${val}<span style="font-size:1rem;color:var(--muted)">%</span></div>
+        <div class="dim-bar-track" style="margin-top:12px;">
+          <div class="dim-bar-fill" data-target="${val}"></div>
+        </div>`;
+      dimGrid.appendChild(card);
+    });
+    setTimeout(() => {
+      document.querySelectorAll('.dim-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.target + '%';
+      });
+    }, 500);
+
+    // Recs
+    const recsList = document.getElementById('recs-list');
+    recsList.innerHTML = '';
+    recs.forEach((r, i) => {
+      const div = document.createElement('div');
+      div.className = 'rec-item';
+      div.style.animationDelay = (i * 0.15) + 's';
+      div.innerHTML = `<div class="rec-num">0${i+1}.</div><div class="rec-content"><div class="rec-head">${r.head}</div><div class="rec-body">${r.body}</div></div>`;
+      recsList.appendChild(div);
+    });
+  }
+
+  function animateNum(id, from, to, duration) {
+    const el = document.getElementById(id);
+    const start = performance.now();
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(from + (to - from) * eased);
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Initialize
+  updateProgress();
+</script>
+
+</body>
+</html>
